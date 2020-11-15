@@ -21,12 +21,28 @@ proc main =
   discard XUnmapWindow(display, win)
   discard XFlush(display)
   
+  # If args have spaces, escape with backslash
+  let 
+    # Right now only support 2 arguments
+    cmd = paramStr(1)
+    file = paramStr(2)
+
+  var new_cmd = cmd & "  "
+
+  for ch in file:
+    if ch != ' ':
+      new_cmd.add(ch)
+    else:
+      new_cmd.add("\\ ")
+
   # Run the command to be devoured
-  discard execProcess(paramStr(1))
+  discard execProcess(new_cmd)
 
   discard XMapWindow(display, win)
   discard XCloseDisplay(display)
+
   return
+
 
 when isMainModule:
   main()
