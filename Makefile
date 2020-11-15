@@ -1,4 +1,4 @@
-all: devour
+all: 
 	nimble build
 
 install: 
